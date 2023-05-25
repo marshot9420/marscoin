@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { styled } from "styled-components";
 
 const Container = styled.div`
+  max-width: 480px;
+  margin: 0 auto;
   padding: 0px 20px;
 `;
 
@@ -10,7 +12,7 @@ const Header = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 10vh;
+  height: 15vh;
 `;
 
 const CoinsList = styled.ul``;
@@ -22,7 +24,8 @@ const Coin = styled.li`
   padding: 20px;
   border-radius: 15px;
   a {
-    display: block;
+    display: flex;
+    align-items: center;
     font-weight: bold;
     transition: color 0.2s ease-in;
   }
@@ -41,6 +44,12 @@ const Title = styled.h1`
 const Loader = styled.span`
   display: block;
   text-align: center;
+`;
+
+const Img = styled.img`
+  height: 35px;
+  width: 35px;
+  margin-right: 10px;
 `;
 
 interface ICoins {
@@ -78,7 +87,12 @@ const Coins = () => {
         <CoinsList>
           {coins.map((coin) => (
             <Coin key={coin.id}>
-              <Link to={`/${coin.id}`}>{coin.name}</Link>
+              <Link to={`/${coin.id}`} state={{ name: coin.name }}>
+                <Img
+                  src={`https://coinicons-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}
+                />
+                {coin.name} &rarr;
+              </Link>
             </Coin>
           ))}
         </CoinsList>
