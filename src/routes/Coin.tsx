@@ -1,14 +1,17 @@
-import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
+import { Helmet } from "react-helmet";
 import {
-  Link,
-  Outlet,
   useLocation,
-  useMatch,
   useParams,
+  Link,
+  useMatch,
+  Routes,
+  Route,
 } from "react-router-dom";
-import { styled } from "styled-components";
+import styled from "styled-components";
 import { fetchCoinInfo, fetchCoinTickers } from "../api";
+import Chart from "./Chart";
+import Price from "./Price";
 
 const Container = styled.div`
   max-width: 480px;
@@ -144,27 +147,31 @@ interface PriceData {
 const Coin = () => {
   const { coinId } = useParams();
   const { state } = useLocation() as RouteState;
-
   const priceMatch = useMatch("/:coinId/price");
   const chartMatch = useMatch("/:coinId/chart");
-
   const { isLoading: infoLoading, data: infoData } = useQuery<InfoData>(
     ["info", coinId],
     () => fetchCoinInfo(coinId)
   );
-
   const { isLoading: tickersLoading, data: tickersData } = useQuery<PriceData>(
     ["tickers", coinId],
-    () => fetchCoinTickers(coinId)
+    () => fetchCoinTickers(coinId),
+    {
+      refetchInterval: 5000,
+    }
   );
-
   const loading = infoLoading || tickersLoading;
 
   return (
     <Container>
+      <Helmet>
+        <title>
+          {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
+        </title>
+      </Helmet>
       <Header>
         <Title>
-          {state.name ? state.name : loading ? "Loading..." : infoData?.name}
+          {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
         </Title>
       </Header>
       {loading ? (
@@ -173,7 +180,7 @@ const Coin = () => {
         <>
           <Overview>
             <OverviewItem>
-              <span>Rank: </span>
+              <span>Rank:</span>
               <span>{infoData?.rank}</span>
             </OverviewItem>
             <OverviewItem>
@@ -193,7 +200,7 @@ const Coin = () => {
             </OverviewItem>
             <OverviewItem>
               <span>Price:</span>
-              <span>{tickersData?.quotes.USD.price.toFixed(2)}</span>
+              <span>{tickersData?.quotes.USD.price.toFixed(2)} USD</span>
             </OverviewItem>
             <OverviewItem>
               <span>Max Supply:</span>
@@ -208,7 +215,10 @@ const Coin = () => {
               <Link to={`/${coinId}/price`}>Price</Link>
             </Tab>
           </Tabs>
-          <Outlet />
+          <Routes>
+            <Route path="chart" element={<Chart coinId={coinId!} />} />
+            <Route path="price" element={<Price coinId={coinId!} />} />
+          </Routes>
         </>
       )}
     </Container>

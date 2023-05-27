@@ -20,6 +20,8 @@ URL:
 
 - react-query: 데이터 비동기 처리, 캐싱, 동기화, 업데이트 등의 작업 간소화로 인한 애플리케이션의 성능 향상
 
+- react-helmet: <head> 요소(메타데이터 등 포함)의 동적 관리
+
 ## 애플리케이션 구조
 
 이 프로젝트는 'npx create-react-app marscoin --template typescript' 명령어를 통해 생성하였으며 이후 필요한 의존성 라이브러리를 추가로 설치했습니다.
