@@ -38,12 +38,25 @@ URL:
 
 ## 프로젝트 구조
 
-- tsconfig.json : 'npx create-react-app marscoin --template typescript' 명령어를 통해 애플리케이션이 생성되면서 자동으로 설치된 파일입니다. typescript 설정에 관한 정보를 담고 있습니다.
-- README.md : 이 프로젝트에 관한 설명입니다.
-- src : 이 프로젝트의 소스코드가 들어 있습니다.
-  - App.tsx :
-  - index.tsx
-  - react-app-env.d.ts
+marscoin/
+├── src/
+│ ├── components/
+│ │ └── Header.tsx: 상단 header 컴포넌트, title, home버튼, darkmode 버튼
+│ ├── routes/
+│ │ ├── Coins.tsx: 암호화폐 리스트
+│ │ ├── Coin.tsx: 특정 암호화폐에 대한 정보와 차트, 가격
+│ │ ├── Chart.tsx: 암호화폐의 막대 그래프 차트
+│ │ ├── Price.tsx: 암호화폐의 가격에 대한 일일 정보
+│ │ └── atoms.ts: Recoil 상태 정의
+│ ├── App.tsx: 애플리케이션 진입점
+│ ├── index.tsx: React 애플리케이션을 실제 DOM에 렌더링하는 엔트리 포인트
+│ ├── react-app-env.d.ts: TypeScript 환경 설정
+│ ├── Router.tsx: Coins.tsx, Coin.tsx 라우팅
+│ ├── styled.d.ts: styled-components 라이브러리에 대한 타입 선언(커스텀 theme)
+│ ├── theme.ts: 애플리케이션의 theme 스타일 정의
+│ └── api.ts: API fetch 함수 정의
+├── README.md: 이 프로젝트의 설명
+└── tsconfig.json: TypeScript 설정 파일
 
 ## 이슈 노트
 
