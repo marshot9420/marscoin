@@ -13,6 +13,8 @@ import { fetchCoinInfo, fetchCoinTickers } from "../api";
 import Chart from "./Chart";
 import Price from "./Price";
 import Header from "../components/Header";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { isDarkAtom } from "./atoms";
 
 const Container = styled.div`
   max-width: 480px;
@@ -133,14 +135,11 @@ interface PriceData {
   };
 }
 
-interface ICoinProps {
-  isDark: boolean;
-  toggleDark: () => void;
-}
-
-const Coin = ({ isDark, toggleDark }: ICoinProps) => {
+const Coin = () => {
   const { coinId } = useParams();
   const { state } = useLocation() as RouteState;
+  const setDarkAtom = useSetRecoilState(isDarkAtom);
+  const toggleDark = () => setDarkAtom((prev) => !prev);
   const priceMatch = useMatch("/:coinId/price");
   const chartMatch = useMatch("/:coinId/chart");
   const { isLoading: infoLoading, data: infoData } = useQuery<InfoData>(
@@ -209,10 +208,7 @@ const Coin = ({ isDark, toggleDark }: ICoinProps) => {
             </Tab>
           </Tabs>
           <Routes>
-            <Route
-              path="chart"
-              element={<Chart isDark={isDark} coinId={coinId!} />}
-            />
+            <Route path="chart" element={<Chart coinId={coinId!} />} />
             <Route path="price" element={<Price coinId={coinId!} />} />
           </Routes>
         </>
