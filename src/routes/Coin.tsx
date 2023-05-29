@@ -12,23 +12,12 @@ import styled from "styled-components";
 import { fetchCoinInfo, fetchCoinTickers } from "../api";
 import Chart from "./Chart";
 import Price from "./Price";
+import Header from "../components/Header";
 
 const Container = styled.div`
   max-width: 480px;
   margin: 0 auto;
   padding: 0px 20px;
-`;
-
-const Header = styled.header`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 15vh;
-`;
-
-const Title = styled.h1`
-  font-size: 48px;
-  color: ${(props) => props.theme.accentColor};
 `;
 
 const Loader = styled.span`
@@ -144,7 +133,12 @@ interface PriceData {
   };
 }
 
-const Coin = () => {
+interface ICoinProps {
+  isDark: boolean;
+  toggleDark: () => void;
+}
+
+const Coin = ({ isDark, toggleDark }: ICoinProps) => {
   const { coinId } = useParams();
   const { state } = useLocation() as RouteState;
   const priceMatch = useMatch("/:coinId/price");
@@ -169,11 +163,10 @@ const Coin = () => {
           {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
         </title>
       </Helmet>
-      <Header>
-        <Title>
-          {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
-        </Title>
-      </Header>
+      <Header
+        name={state?.name || (loading ? "MarsCoin" : infoData?.name || "")}
+        toggleDark={toggleDark}
+      />
       {loading ? (
         <Loader>Loading...</Loader>
       ) : (
@@ -195,7 +188,7 @@ const Coin = () => {
           <Description>{infoData?.description}</Description>
           <Overview>
             <OverviewItem>
-              <span>Total Suply:</span>
+              <span>Total Supply:</span>
               <span>{tickersData?.total_supply}</span>
             </OverviewItem>
             <OverviewItem>
@@ -216,7 +209,10 @@ const Coin = () => {
             </Tab>
           </Tabs>
           <Routes>
-            <Route path="chart" element={<Chart coinId={coinId!} />} />
+            <Route
+              path="chart"
+              element={<Chart isDark={isDark} coinId={coinId!} />}
+            />
             <Route path="price" element={<Price coinId={coinId!} />} />
           </Routes>
         </>

@@ -22,6 +22,8 @@ URL:
 
 - react-helmet: <head> 요소(메타데이터 등 포함)의 동적 관리
 
+- react-icons: ReactJS에서 다양한 아이콘을 쓸 수 있는 라이브러리
+
 ## 애플리케이션 구조
 
 이 프로젝트는 'npx create-react-app marscoin --template typescript' 명령어를 통해 생성하였으며 이후 필요한 의존성 라이브러리를 추가로 설치했습니다.

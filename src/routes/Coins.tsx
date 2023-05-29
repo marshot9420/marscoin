@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import { styled } from "styled-components";
 import { fetchCoins } from "../api";
+import Header from "../components/Header";
 
 const Container = styled.div`
   max-width: 480px;
@@ -10,18 +11,11 @@ const Container = styled.div`
   padding: 0px 20px;
 `;
 
-const Header = styled.header`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 15vh;
-`;
-
 const CoinsList = styled.ul``;
 
 const Coin = styled.li`
   background-color: white;
-  color: ${(props) => props.theme.bgColor};
+  color: ${(props) => props.theme.textColor};
   margin-bottom: 10px;
   padding: 20px;
   border-radius: 15px;
@@ -36,11 +30,6 @@ const Coin = styled.li`
       color: ${(props) => props.theme.accentColor};
     }
   }
-`;
-
-const Title = styled.h1`
-  font-size: 48px;
-  color: ${(props) => props.theme.accentColor};
 `;
 
 const Loader = styled.span`
@@ -64,16 +53,18 @@ interface ICoins {
   type: string;
 }
 
-const Coins = () => {
+interface ICoinsProps {
+  toggleDark: () => void;
+}
+
+const Coins = ({ toggleDark }: ICoinsProps) => {
   const { isLoading, data } = useQuery<ICoins[]>(["allCoins"], fetchCoins);
   return (
     <Container>
       <Helmet>
         <title>MarsCoin</title>
       </Helmet>
-      <Header>
-        <Title>MarsCoin</Title>
-      </Header>
+      <Header name="MarsCoin" toggleDark={toggleDark} />
 
       {isLoading ? (
         <Loader>Loading...</Loader>
