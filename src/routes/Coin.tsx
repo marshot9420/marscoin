@@ -13,7 +13,7 @@ import { fetchCoinInfo, fetchCoinTickers } from "../api";
 import Chart from "./Chart";
 import Price from "./Price";
 import Header from "../components/Header";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { isDarkAtom } from "./atoms";
 
 const Container = styled.div`
