@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/marscoin/static/js/main.ae72df96.js",
+    "index.html": "/marscoin/index.html",
+    "main.ae72df96.js.map": "/marscoin/static/js/main.ae72df96.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.ae72df96.js"
+  ]
+}
